@@ -3,14 +3,13 @@ library(jsonlite)
 library(tm)
 library(wordcloud)
 
+# Modify this to change the resulting file location
 output.filename <- "~/Desktop/wordcloud.png"
 
+# load the json into a flat format compatible with `Corpus`
 files <- list.files('.',"*.json", recursive=T)
- 
 json <- sapply(files, fromJSON)
- 
 texts <- sapply(json, function(f){if ('subtype' %in% names(f)) f$text[is.na(f$subtype)] else f$text})
- 
 flat <- unlist(texts)
 
 removeUsernames <- function(doc) {
